@@ -1,0 +1,30 @@
+$body-bg: #f4f4f4
+$text-color: #333
+$table-bg: #fff
+$table-border: #ddd
+
+body
+  background-color: $body-bg
+  color: $text-color
+  font-family: Arial, sans-serif
+  padding: 20px
+
+h1, h2, h3
+  color: darken($text-color, 20%)
+
+table
+  width: 100%
+  margin-bottom: 20px
+  border-collapse: collapse
+  background-color: $table-bg
+
+th, td
+  padding: 10px
+  border: 1px solid $table-border
+
+th
+  text-align: left
+  background-color: darken($table-bg, 10%)
+
+td
+  text-align: left

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Undergraduate Academic Report</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>{{ data.student.name }}'s Academic Report</h1>
+    <h2>{{ data.student.degree }} at {{ data.student.university }}</h2>
+    <h2>CGPA: {{ data.student.cgpa }}</h2>
+
+    {% for semester in data.semesters %}
+    <h3>{{ semester.semester }} (GPA: {{ semester.gpa }})</h3>
+    <table border="1">
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Credits</th>
+            <th>Grade</th>
+        </tr>
+        {% for course in semester.courses %}
+        <tr>
+            <td>{{ course.code }}</td>
+            <td>{{ course.name }}</td>
+            <td>{{ course.credits }}</td>
+            <td>{{ course.grade }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+</body>
+</html>
