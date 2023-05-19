@@ -1,7 +1,20 @@
+# pylint: disable=all
 from flask import Flask, render_template
+from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 import json
 
+load_dotenv()
+mongo_connection_string = os.getenv("MONGO_CONNECTION_STRING")
+print(f"MongoDB Connection String: {mongo_connection_string}")
+
 app = Flask(__name__)
+client = MongoClient(mongo_connection_string)
+
+db = client["test"]
+
+
 
 def calculate_gpa_and_cgpa(data):
     total_weighted_grades = 0
@@ -16,14 +29,19 @@ def calculate_gpa_and_cgpa(data):
     return data
 
 
-
-
 @app.route('/')
 def home():
-    with open('data.json') as json_file:
-        data = json.load(json_file)
+    data = db.test.find_one()  # Fetch the first document from your collection
     data = calculate_gpa_and_cgpa(data)
     return render_template('index.html', data=data)
+
+
+# @app.route('/')
+# def home():
+#     with open('data.json') as json_file:
+#         data = json.load(json_file)
+#     data = calculate_gpa_and_cgpa(data)
+#     return render_template('index.html', data=data)
 
 
 
