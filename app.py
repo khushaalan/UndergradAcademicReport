@@ -13,7 +13,18 @@ app = Flask(__name__)
 client = MongoClient(mongo_connection_string)
 
 db = client["test"]
+collection = db["test"]
 
+def delete_data():
+    # Delete all documents from collection
+    collection.delete_many({})
+
+
+def insert_data():
+    # Import data from JSON file to collection
+    with open('data.json') as json_file:
+        data = json.load(json_file)
+        collection.insert_one(data)
 
 
 def calculate_gpa_and_cgpa(data):
@@ -31,18 +42,11 @@ def calculate_gpa_and_cgpa(data):
 
 @app.route('/')
 def home():
+    insert_data()
+    #delete_data()
     data = db.test.find_one()  # Fetch the first document from your collection
     data = calculate_gpa_and_cgpa(data)
     return render_template('index.html', data=data)
-
-
-# @app.route('/')
-# def home():
-#     with open('data.json') as json_file:
-#         data = json.load(json_file)
-#     data = calculate_gpa_and_cgpa(data)
-#     return render_template('index.html', data=data)
-
 
 
 if __name__ == '__main__':
